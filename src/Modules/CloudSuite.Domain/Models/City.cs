@@ -20,6 +20,17 @@ namespace CloudSuite.Domain.Models
             State = state;
         }
 
+        public City(Guid id, string? cityName)
+        {
+            StateId = id;
+            CityName = cityName;
+        }
+
+        public City(string? cityName)
+        {
+            CityName = cityName;
+        }
+
         [Required(ErrorMessage = "Este campo � de preenchimento obrigat�rio.")]
         [MaxLength(50)]
 
@@ -27,8 +38,8 @@ namespace CloudSuite.Domain.Models
 
         public IReadOnlyCollection<State> States => _states.AsReadOnly();
 
-        public State State { get; private set; }
+        public State State { get; set; }
 
-        public Guid StateId { get; private set; }
+        public Guid StateId { get; set; }
     }
 }

@@ -28,72 +28,9 @@ namespace CloudSuite.Modules.Application.Validations.Company
                 .NotNull()
                 .WithMessage("O campo RegisterName não pode ser nulo.");
 
-            RuleFor(a => a.Address.ContactName)
-              .NotEmpty()
-              .WithMessage("O campo ContactName é obrigatório.")
-              .Length(1, 60)
-              .WithMessage("O campo ContactName deve ter entre 1 e 60 caracteres.")
-              .Matches(@"^[a-zA-Z\s]*$")
-              .WithMessage("O campo ContactName deve conter apenas letras e espaços.")
-              .NotNull()
-              .WithMessage("O campo ContactName não pode ser nulo.");
-
-            RuleFor(a => a.Address.AddressLine1)
-                .NotEmpty()
-                .WithMessage("O campo AddressLine1 é obrigatório.")
-                .Length(1, 300)
-                .WithMessage("O campo AddressLine1 deve ter entre 1 e 300 caracteres.")
-                .Matches(@"^[a-zA-Z0-9\s,]*$")
-                .WithMessage("O campo AddressLine1 deve conter apenas letras, números, espaços e vírgulas.")
-                .NotNull()
-                .WithMessage("O campo AddressLine1 não pode ser nulo.");
-
-            RuleFor(a => a.Address.City.CityName)
-                .NotEmpty()
-                .WithMessage("O campo CityName é obrigatório.")
-                .Length(1, 50)
-                .WithMessage("O campo CityName deve ter entre 1 e 50 caracteres.")
-                .Matches(@"^[a-zA-Z\s]*$")
-                .WithMessage("O campo CityName deve conter apenas letras e espaços.")
-                .NotNull()
-                .WithMessage("O campo CityName não pode ser nulo.");
-
-
-            RuleFor(a => a.Address.District.Name)
-                .NotEmpty()
-                .WithMessage("O campo Name é obrigatório.")
-                .Length(1, 450)
-                .WithMessage("O campo Name deve ter entre 1 e 450 caracteres.")
-                .Matches(@"^[a-zA-Z\s]*$")
-                .WithMessage("O campo Name deve conter apenas letras e espaços.")
-                .NotNull()
-                .WithMessage("O campo Name não pode ser nulo.");
-
-            RuleFor(a => a.Address.District.Type)
-                .NotEmpty()
-                .WithMessage("O campo Type é obrigatório.")
-                .Matches(@"^[a-zA-Z\s]*$")
-                .WithMessage("O campo Type deve conter apenas letras e espaços.")
-                .NotNull().WithMessage("O campo Type não pode ser nulo.");
-
-            RuleFor(a => a.Address.District.Location)
-                .NotEmpty()
-                .WithMessage("O campo Location é obrigatório.")
-                .Length(1, 100)
-                .WithMessage("O campo Location deve ter entre 1 e 100 caracteres.")
-                .Matches(@"^[a-zA-Z0-9\s,]*$")
-                .WithMessage("O campo Location deve conter apenas letras, números, espaços e vírgulas.")
-                .NotNull()
-                .WithMessage("O campo Location não pode ser nulo.");
-                       
-                       
-            
                 RuleFor(a => a.Cnpj)
-                    .Must(cnpj => IsValid(cnpj.CnpjNumber))
+                    .Must(cnpj => IsValid(cnpj))
                     .WithMessage("O campo Cnpj é inválido.");
-
-
-          
         }
         
             private bool IsValid(string cnpj)

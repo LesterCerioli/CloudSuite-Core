@@ -18,30 +18,32 @@ namespace CloudSuite.Modules.Application.Handlers.Country
             _logger = logger;
         }
 
-        public async Task<CreateCountryResponse> Handle(CreateCountryCommand request, CancellationToken cancellationToken)
+        public async Task<CreateCountryResponse> Handle(CreateCountryCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"CreateCountryCommand: {JsonSerializer.Serialize(request)}");
-            var validationResult = new CreateCountryCommandValidation().Validate(request);
+            _logger.LogInformation($"CreateCountryCommand: {JsonSerializer.Serialize(command)}");
+            var validationResult = new CreateCountryCommandValidation().Validate(command);
 
             if (validationResult.IsValid)
             {
                 try
                 {
-                    var CountryName = await _countryRepository.GetByName(request.CountryName);
-                    var CountryCode = await _countryRepository.GetByCode(request.Code3);
+                    var CountryName = await _countryRepository.GetByName(command.CountryName);
+                    var CountryCode = await _countryRepository.GetByCode(command.Code3);
 
                     if (CountryName != null && CountryCode != null)
                     {
-                        return await Task.FromResult(new CreateCountryResponse(request.Id, validationResult));
+                        return await Task.FromResult(new CreateCountryResponse(command.Id, "Country already registered."));
                     }
+                    await _countryRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateCountryResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {
                     _logger.LogCritical(ex.Message);
-                    return await Task.FromResult(new CreateCountryResponse(request.Id, "Failed to process the request."));
+                    return await Task.FromResult(new CreateCountryResponse(command.Id, "Failed to process the request."));
                 }
             }
-            return await Task.FromResult(new CreateCountryResponse(request.Id, validationResult));
+            return await Task.FromResult(new CreateCountryResponse(command.Id, validationResult));
         }
     }
 }

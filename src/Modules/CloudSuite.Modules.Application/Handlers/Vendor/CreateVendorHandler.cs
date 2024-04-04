@@ -33,8 +33,10 @@ namespace CloudSuite.Modules.Application.Handlers.Vendor
 
                     if (vendorCnpj != null && vendorName != null && vendorCreationDate != null)
                     {
-                        return await Task.FromResult(new CreateVendorResponse(command.Id, validationResult));
+                        return await Task.FromResult(new CreateVendorResponse(command.Id, "Vendor already registered."));
                     }
+                    await _vendorRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateVendorResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {

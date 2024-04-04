@@ -25,9 +25,7 @@ namespace CloudSuite.Modules.Application.Validations.Media
                 .Length(1, 450)
                 .WithMessage("O campo FileName deve ter entre 1 e 450 caracteres.");
 
-            RuleFor(a => a.MediaType)
-                .IsInEnum()
-                .WithMessage("O campo MediaType deve ser um valor válido do enum MediaType.");
+            
         }
     }
 }

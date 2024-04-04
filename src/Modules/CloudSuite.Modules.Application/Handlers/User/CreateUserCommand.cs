@@ -12,45 +12,39 @@ namespace CloudSuite.Modules.Application.Handlers.User
     public class CreateUserCommand : IRequest<CreateUserResponse>
     {
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        [Required(ErrorMessage = "The {0} field is required.")]
-        public string? FullName { get; private set; }
+        
+        public string? FullName { get; set; }
 
-        public EmailEntity Email { get; private set; }
+        
+        public string? Cpf { get; set; }
 
-        public Cpf Cpf { get; private set; }
+        public string? TelephoneNumber { get; set; }
 
-        public Telephone Telephone { get; private set; }
+        public string? TelephoneRegion { get; set; }
 
-        public VendorEntity Vendor { get; private set; }
+        public bool? IsDeleted { get; set; }
 
-        public bool? IsDeleted { get; private set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
-        public DateTimeOffset? CreatedOn { get; private set; }
+        public DateTimeOffset? LatestUpdatedOn { get; set; }
 
-        public DateTimeOffset? LatestUpdatedOn { get; private set; }
+        
+        public string? RefreshTokenHash { get; set; }
 
-        [StringLength(450)]
-        public string? RefreshTokenHash { get; private set; }
+        
+        public string? Culture { get; set; }
 
-        [StringLength(450)]
-        public string? Culture { get; private set; }
+        public string? ExtensionData { get; set; }
 
-        public string? ExtensionData { get; private set; }
-
-        public Guid VendorId { get; private set; }
-
-
+        
         public UserEntity GetEntity()
         {
             return new UserEntity(
                 this.FullName,
-                this.Email,
-                this.Cpf,
-                this.Telephone,
-                this.Vendor,
-                this.IsDeleted,
+                new Cpf(this.Cpf),
+                this.IsDeleted.Value,
                 this.CreatedOn,
                 this.LatestUpdatedOn,
                 this.RefreshTokenHash,

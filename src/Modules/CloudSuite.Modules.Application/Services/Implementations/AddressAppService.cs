@@ -3,33 +3,27 @@ using CloudSuite.Domain.Contracts;
 using CloudSuite.Modules.Application.Hadlers.Address;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.ViewModel;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetDevPack.Mediator;
 
 namespace CloudSuite.Modules.Application.Services.Implementations
 {
 	public class AddressAppService : IAddressAppService
 	{
 
+        private readonly IAddressRepository _addressRepository;
 		private readonly IMapper _mapper;
-		private readonly ILogger _logger;
-		private readonly IAddressRepository _addressRepository;
+		private readonly IMediatorHandler _mediator;
 		
 		public AddressAppService(
 			IAddressRepository addressRepository,
-			IMapper mapper,
-			ILogger<IAddressAppService> logger)
+            IMediatorHandler mediator,
+            IMapper mapper)
 		{
 			_addressRepository = addressRepository;
             _mapper = mapper;
-            _logger = logger;
+            _mediator = mediator;
 
 		}
-
 		 public async Task<AddressViewModel> GetByAddressLine(string addressLine1)
         {
             return _mapper.Map<AddressViewModel>(await _addressRepository.GetByAddressLine(addressLine1));

@@ -31,7 +31,7 @@ namespace CloudSuite.Modules.Application.Hadlers.City
                     if (cityCityName == null)
                     {
                         await _cityRepository.Add(command.GetEntity());
-                        return new CreateCityResponse(command.StateId, validationResult);
+                        return new CreateCityResponse(command.Id, validationResult);
                     }
 
                     return new CreateCityResponse(command.Id, "City already registered"); ;
@@ -40,7 +40,7 @@ namespace CloudSuite.Modules.Application.Hadlers.City
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error creating extract");
-                    return new CreateCityResponse(command.Id, "Error creating Adress");
+                    return new CreateCityResponse(command.Id, "Error creating City");
                 }
             }
             return new CreateCityResponse(command.Id, validationResult);

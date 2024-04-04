@@ -30,8 +30,10 @@ namespace CloudSuite.Modules.Application.Handlers.District
 
                     if (countryName != null)
                     {
-                        return await Task.FromResult(new CreateDistrictResponse(command.Id, validationResult));
+                        return await Task.FromResult(new CreateDistrictResponse(command.Id, "District already registered."));
                     }
+                    await _districtRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateDistrictResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {

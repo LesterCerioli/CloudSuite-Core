@@ -1,4 +1,5 @@
 using CloudSuite.Domain.Contracts;
+using CloudSuite.Domain.Contracts.PasswordGeneratorContext;
 using CloudSuite.Infrastructure.Context;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.Services.Implementations;
@@ -21,6 +22,8 @@ namespace CloudSuite.Infrastructure.CrossCutting
             services.AddScoped<IStateRepository>();
             services.AddScoped<IUserRepository>();
             services.AddScoped<IVendorRepository>();
+            //services.AddScoped<IPasswordRepository>();
+
 
             // Application
             services.AddScoped<ICityAppService, CityAppService>();
@@ -33,8 +36,9 @@ namespace CloudSuite.Infrastructure.CrossCutting
             services.AddScoped<IStateAppService, StateAppService>();
             services.AddScoped<IUserAppService, UserAppService>();
             services.AddScoped<IVendorAppService, VendorAppService>();
+            //services.AddScoped<IPasswordAppService, PasswordAppService>();
 
 
-		}
+        }
 	}
 }

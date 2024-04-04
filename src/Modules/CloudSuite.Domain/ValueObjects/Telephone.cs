@@ -18,6 +18,15 @@ namespace CloudSuite.Domain.ValueObjects
         public string TelephoneRegion { get; private set; }
 
 
+        public Telephone(string telephoneNumber, string telephoneRegion)
+        {
+            if (ValidarTelefone(telephoneNumber))
+            {
+                TelephoneNumber = telephoneNumber;
+                TelephoneRegion = telephoneRegion;
+            }
+        }
+
         public static bool ValidarTelefone(string telefone)
         {
             string shortenNum = Regex.Replace(telefone, @"[^0-9a-zA-Z]+", "");

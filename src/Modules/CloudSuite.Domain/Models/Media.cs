@@ -10,6 +10,22 @@ namespace CloudSuite.Domain.Models
 {
     public class Media : Entity, IAggregateRoot
     {
+        private object value;
+
+        public Media(string? caption, int? fileSize, string? fileName)
+        {
+            Caption = caption;
+            FileSize = fileSize;
+            FileName = fileName;
+        }
+
+        public Media(string? caption, int? fileSize, string? fileName, object value)
+        {
+            Caption = caption;
+            FileSize = fileSize;
+            FileName = fileName;
+            this.value = value;
+        }
 
         public Media(Guid id, string? caption, int? fileSize, string? fileName, MediaType mediaType) {
             Id = id;
@@ -19,14 +35,14 @@ namespace CloudSuite.Domain.Models
             MediaType = mediaType;
         }
 
-        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Required(ErrorMessage = "Este campo ï¿½ de preenchimento obrigatï¿½rio.")]
         [StringLength(450)]
         public string? Caption { get; set; }
 
-        [Required(ErrorMessage ="Este campo é obrigatório.")]
+        [Required(ErrorMessage ="Este campo ï¿½ obrigatï¿½rio.")]
         public int? FileSize { get; set; }
 
-        [Required(ErrorMessage ="Este campo é de preencimento obrigatório.")]
+        [Required(ErrorMessage ="Este campo ï¿½ de preencimento obrigatï¿½rio.")]
         [StringLength(450)]
         public string? FileName { get; set; }
 

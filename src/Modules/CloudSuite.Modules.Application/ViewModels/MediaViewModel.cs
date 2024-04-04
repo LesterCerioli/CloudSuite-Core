@@ -11,7 +11,7 @@ namespace CloudSuite.Modules.Application.ViewModels
 	public class MediaViewModel
 	{
 		[Key]
-		public Guid Id { get; private set; }
+		public Guid Id { get; set; }
 
 		[Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
 		[StringLength(450)]

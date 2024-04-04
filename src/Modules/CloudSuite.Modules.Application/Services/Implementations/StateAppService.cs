@@ -4,27 +4,27 @@ using CloudSuite.Modules.Application.Handlers.State;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.ViewModels;
 using Microsoft.Extensions.Logging;
+using NetDevPack.Mediator;
 
 namespace CloudSuite.Modules.Application.Services.Implementations
 {
 	public class StateAppService : IStateAppService
 	{
-		private readonly IStateRepository _stateRepository;
-		private readonly IMapper _mapper;
-		private readonly ILogger _logger;
+        private readonly IStateRepository _stateRepository;
+        private readonly IMapper _mapper;
+        private readonly IMediatorHandler _mediator;
 
-		public StateAppService(
-			IStateRepository stateRepository,
-			IMapper mapper,
-			ILogger<IStateAppService> logger)
-		{
-			_stateRepository = stateRepository;
-			_mapper = mapper;
-			_logger = logger;
-		}
+        public StateAppService(
+            IStateRepository stateRepository,
+            IMediatorHandler mediator,
+            IMapper mapper)
+        {
+            _stateRepository = stateRepository;
+            _mapper = mapper;
+            _mediator = mediator;
+        }
 
-
-		public async Task<StateViewModel> GetByName(string stateName)
+        public async Task<StateViewModel> GetByName(string stateName)
 		{
 			return _mapper.Map<StateViewModel>(await _stateRepository.GetByName(stateName));
 		}

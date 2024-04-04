@@ -1,4 +1,5 @@
 ﻿using CloudSuite.Domain.Contracts;
+using CloudSuite.Domain.ValueObjects;
 using CloudSuite.Modules.Application.Handlers.User.Responses;
 using CloudSuite.Modules.Application.Validations.User;
 using MediatR;
@@ -26,13 +27,15 @@ namespace CloudSuite.Modules.Application.Handlers.User
             {
                 try
                 {
-                    var userEmail = await _userRepository.GetByEmail(command.Email);
-                    var UserCpf = await _userRepository.GetByCpf(command.Cpf);
+                    
+                    var UserCpf = await _userRepository.GetByCpf(new Cpf(command.Cpf));
 
-                    if (userEmail != null && UserCpf != null)
+                    if (UserCpf != null)
                     {
-                        return await Task.FromResult(new CreateUserResponse(command.Id, validationResult));
+                        return await Task.FromResult(new CreateUserResponse(command.Id, "User already registered."));
                     }
+                    await _userRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateUserResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {

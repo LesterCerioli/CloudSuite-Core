@@ -28,12 +28,14 @@ namespace CloudSuite.Modules.Application.Handlers.State
                 try
                 {
                     var stateName = await _stateRepository.GetByName(command.StateName);
-                    var mediaFileName = await _stateRepository.GetByUF(command.UF);
+                    var statUf = await _stateRepository.GetByUF(command.UF);
 
-                    if (stateName != null && mediaFileName != null)
+                    if (stateName != null && statUf != null)
                     {
-                        return await Task.FromResult(new CreateStateResponse(command.Id, validationResult));
+                        return await Task.FromResult(new CreateStateResponse(command.Id, "State already registered."));
                     }
+                    await _stateRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateStateResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {

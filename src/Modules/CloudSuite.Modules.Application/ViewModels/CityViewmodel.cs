@@ -8,7 +8,7 @@ namespace CloudSuite.Modules.Application.ViewModel
     public class CityViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Este campo � de preenchimento obrigat�rio.")]
         [MaxLength(100)]

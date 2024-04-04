@@ -13,7 +13,7 @@ namespace CloudSuite.Modules.Application.ViewModels
 	public class UserViewModel
 	{
 		[Required(ErrorMessage = "The {0} field is required.")]
-		public string? FullName { get; private set; }
+		public string? FullName { get; set; }
 
 		[DisplayName("Email")]
 		public string Email { get; set; }
@@ -29,7 +29,7 @@ namespace CloudSuite.Modules.Application.ViewModels
 		public DateTimeOffset CreatedOn { get; set; }
 
 		[DisplayName("Data Atualizacao")]
-		public DateTimeOffset LatestUpdatedOn { get; private set; }
+		public DateTimeOffset LatestUpdatedOn { get; set; }
 
 		
 		

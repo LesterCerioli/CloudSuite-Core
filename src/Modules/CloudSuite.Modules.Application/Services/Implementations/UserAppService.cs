@@ -5,28 +5,27 @@ using CloudSuite.Domain.ValueObjects;
 using CloudSuite.Modules.Application.Handlers.User;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.ViewModels;
-using Microsoft.Extensions.Logging;
+using NetDevPack.Mediator;
 
 namespace CloudSuite.Modules.Application.Services.Implementations
 {
 	public class UserAppService : IUserAppService
 	{
-		private readonly IUserRepository _userRepository;
-		private readonly IMapper _mapper;
-		private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        private readonly IMediatorHandler _mediator;
 
-		public UserAppService(
-			IUserRepository userRepository,
-			IMapper mapper,
-			ILogger<IUserAppService> logger)
-		{
-			_userRepository = userRepository;
-			_mapper = mapper;
-			_logger = logger;
-		}
+        public UserAppService(
+            IUserRepository userRepository,
+            IMediatorHandler mediator,
+            IMapper mapper)
+        {
+            _userRepository = userRepository;
+            _mapper = mapper;
+            _mediator = mediator;
+        }
 
-
-		public async Task<UserViewModel> GetByCpf(Cpf cpf)
+        public async Task<UserViewModel> GetByCpf(Cpf cpf)
 		{
 			return _mapper.Map<UserViewModel>(await _userRepository.GetByCpf(cpf));
 		}

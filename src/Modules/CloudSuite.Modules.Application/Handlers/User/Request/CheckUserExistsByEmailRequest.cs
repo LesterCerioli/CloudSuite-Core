@@ -15,8 +15,6 @@ namespace CloudSuite.Modules.Application.Handlers.User.Request
             Id = Guid.NewGuid();
             Email = email;
         }
-
-        public CheckUserExistsByEmailRequest() { }
     }
 }
 

@@ -33,8 +33,10 @@ namespace CloudSuite.Modules.Application.Handlers.Media
 
                     if (mediaCaption != null && mediaFileName != null && mediaFileSize != null)
                     {
-                        return await Task.FromResult(new CreateMediaResponse(command.Id, validationResult));
+                        return await Task.FromResult(new CreateMediaResponse(command.Id, "Media already registered."));
                     }
+                    await _mediaRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateMediaResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {

@@ -20,32 +20,29 @@ namespace CloudSuite.Modules.Application.Hadlers.Address
 
         public async Task<CreateAddressResponse> Handle(CreateAddressCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"CreateExtractCommand: {JsonSerializer.Serialize(command)}");
+            _logger.LogInformation($"CreateAddressCommand: {JsonSerializer.Serialize(command)}");
             var validationResult = new CreateAddressCommandValidation().Validate(command);
 
             if (validationResult.IsValid)
             {
                 try
                 {
-                    var adressExistAdressLine = await _addressRepository.GetByAddressLine(command.AddressLine1);
-                    var adressExistContactName = await _addressRepository.GetByContactName(command.ContactName);
+                    var addressAddressLine = await _addressRepository.GetByAddressLine(command.AddressLine1);
+                    var addressContactName = await _addressRepository.GetByContactName(command.ContactName);
 
-                    if (adressExistAdressLine == null && adressExistContactName == null)
-                    {
-                        await _addressRepository.Add(command.GetEntity());
-                        return new CreateAddressResponse(command.Id, validationResult);
+                    if (addressContactName != null && addressAddressLine != null) {
+                        return await Task.FromResult(new CreateAddressResponse(command.Id, "Address already registered!"));
                     }
-
-                    return new CreateAddressResponse(command.Id, "Address already registered");
-
+                    await _addressRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateAddressResponse(command.Id, validationResult));
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error creating extract");
-                    return new CreateAddressResponse(command.Id, "Error creating Adress");
+                catch (Exception ex) { 
+                    _logger.LogCritical(ex.Message);
+                    return await Task.FromResult(new CreateAddressResponse(command.Id, "It`s not possible to process your solicitation."));
                 }
             }
-                    return new CreateAddressResponse(command.Id, validationResult);
+
+            return await Task.FromResult(new CreateAddressResponse(command.Id, validationResult));
         }
     }
 }

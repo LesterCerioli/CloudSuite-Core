@@ -7,35 +7,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F10FB4D-715
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{0948BA51-4F09-44C8-81C2-4DC2E7127154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Domain", "src\Modules\CloudSuite.Domain\CloudSuite.Domain.csproj", "{4052F2B0-E75F-4644-83B3-7D06D10481C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Domain", "src\Modules\CloudSuite.Domain\CloudSuite.Domain.csproj", "{4052F2B0-E75F-4644-83B3-7D06D10481C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Modules.Application", "src\Modules\CloudSuite.Modules.Application\CloudSuite.Modules.Application.csproj", "{784F7901-AF9A-4EEF-95E0-CB7B363D46AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Modules.Application", "src\Modules\CloudSuite.Modules.Application\CloudSuite.Modules.Application.csproj", "{784F7901-AF9A-4EEF-95E0-CB7B363D46AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Infrastructure", "src\CloudSuite.Infrastructure\CloudSuite.Infrastructure.csproj", "{A5D112D9-2602-412C-90B8-BA086E1A390E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Infrastructure", "src\CloudSuite.Infrastructure\CloudSuite.Infrastructure.csproj", "{A5D112D9-2602-412C-90B8-BA086E1A390E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Infrastructure.CrossCutting", "src\CloudSuite.Infrastructure.CrossCutting\CloudSuite.Infrastructure.CrossCutting.csproj", "{F5A44628-9DE5-4B15-9B46-99429EF9DFD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Infrastructure.CrossCutting", "src\CloudSuite.Infrastructure.CrossCutting\CloudSuite.Infrastructure.CrossCutting.csproj", "{F5A44628-9DE5-4B15-9B46-99429EF9DFD5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8DE49E50-1378-4CAB-A14D-73A9B2E258AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xunit", "xunit", "{F2674208-7A16-4069-B324-07FE90048D28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Infrastructure.Tests", "test\xunit\CloudSuite.Infrastructure.Tests\CloudSuite.Infrastructure.Tests.csproj", "{B55671A8-7FD2-4DE3-B0F7-02E18FF23EF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Infrastructure.Tests", "test\xunit\CloudSuite.Infrastructure.Tests\CloudSuite.Infrastructure.Tests.csproj", "{B55671A8-7FD2-4DE3-B0F7-02E18FF23EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Module.Domain.Tests", "test\xunit\CloudSuite.Module.Domain.Tests\CloudSuite.Module.Domain.Tests.csproj", "{F8BDF661-50FB-4533-A927-EA04550B3F33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Module.Domain.Tests", "test\xunit\CloudSuite.Module.Domain.Tests\CloudSuite.Module.Domain.Tests.csproj", "{F8BDF661-50FB-4533-A927-EA04550B3F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Modules.Application.Tests", "test\xunit\CloudSuite.Modules.Application.Tests\CloudSuite.Modules.Application.Tests.csproj", "{3BD718BF-DEAD-4129-AAA8-BA0DBD231762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Modules.Application.Tests", "test\xunit\CloudSuite.Modules.Application.Tests\CloudSuite.Modules.Application.Tests.csproj", "{3BD718BF-DEAD-4129-AAA8-BA0DBD231762}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rest", "Rest", "{A9DAC9E0-8E7F-4AF9-B882-DB0CB2559F8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSuite.Services.Core.API", "src\Rest\CloudSuite.Services.Core.API\CloudSuite.Services.Core.API.csproj", "{78631F80-EFB2-489B-8C5A-D3C3AEF507BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Services.Core.Api", "src\Rest\CloudSuite.Services.Core.Api\CloudSuite.Services.Core.Api.csproj", "{B17DCCBD-7345-4185-9518-CC18DA93C363}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4052F2B0-E75F-4644-83B3-7D06D10481C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -66,10 +63,13 @@ Global
 		{3BD718BF-DEAD-4129-AAA8-BA0DBD231762}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BD718BF-DEAD-4129-AAA8-BA0DBD231762}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BD718BF-DEAD-4129-AAA8-BA0DBD231762}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78631F80-EFB2-489B-8C5A-D3C3AEF507BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78631F80-EFB2-489B-8C5A-D3C3AEF507BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78631F80-EFB2-489B-8C5A-D3C3AEF507BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78631F80-EFB2-489B-8C5A-D3C3AEF507BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B17DCCBD-7345-4185-9518-CC18DA93C363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B17DCCBD-7345-4185-9518-CC18DA93C363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B17DCCBD-7345-4185-9518-CC18DA93C363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B17DCCBD-7345-4185-9518-CC18DA93C363}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0948BA51-4F09-44C8-81C2-4DC2E7127154} = {9F10FB4D-715C-4A5F-B74D-811E36F047D6}
@@ -82,6 +82,9 @@ Global
 		{F8BDF661-50FB-4533-A927-EA04550B3F33} = {F2674208-7A16-4069-B324-07FE90048D28}
 		{3BD718BF-DEAD-4129-AAA8-BA0DBD231762} = {F2674208-7A16-4069-B324-07FE90048D28}
 		{A9DAC9E0-8E7F-4AF9-B882-DB0CB2559F8E} = {9F10FB4D-715C-4A5F-B74D-811E36F047D6}
-		{78631F80-EFB2-489B-8C5A-D3C3AEF507BB} = {A9DAC9E0-8E7F-4AF9-B882-DB0CB2559F8E}
+		{B17DCCBD-7345-4185-9518-CC18DA93C363} = {A9DAC9E0-8E7F-4AF9-B882-DB0CB2559F8E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9E15588-0F8A-4F48-94B2-85426D3D2B65}
 	EndGlobalSection
 EndGlobal

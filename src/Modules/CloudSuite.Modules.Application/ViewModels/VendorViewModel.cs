@@ -13,7 +13,7 @@ namespace CloudSuite.Modules.Application.ViewModels
 	public class VendorViewModel
 	{
 		[Key]
-		public Guid Id { get; private set; }
+		public Guid Id { get; set; }
 
 		[Required(ErrorMessage = "The {0} field is required.")]
 		[StringLength(450)]
@@ -37,9 +37,9 @@ namespace CloudSuite.Modules.Application.ViewModels
 		public string Email { get; set; }
 
 		[DisplayName("Data Criacao")]
-		public DateTimeOffset CreatedOn { get; private set; }
+		public DateTimeOffset CreatedOn { get; set; }
 
 		[DisplayName("Data Atualizacao")]
-		public DateTimeOffset LatestUpdatedOn { get; private set; }
+		public DateTimeOffset LatestUpdatedOn { get; set; }
 	}
 }

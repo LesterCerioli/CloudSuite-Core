@@ -22,6 +22,13 @@ namespace CloudSuite.Domain.Models
 
         public District() { }
 
+        public District(string? name, string? type, string? location)
+        {
+            Name = name;
+            Type = type;
+            Location = location;
+        }
+
         public IReadOnlyCollection<City> Cities => _cities.AsReadOnly();
 
         public City City { get; private set; }

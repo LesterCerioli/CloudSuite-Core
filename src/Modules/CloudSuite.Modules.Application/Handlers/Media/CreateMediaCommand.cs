@@ -10,28 +10,25 @@ namespace CloudSuite.Modules.Application.Handlers.Media
     {
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
-        [StringLength(450)]
+        
         public string? Caption { get; set; }
 
-        [Required(ErrorMessage = "Este campo é obrigatório.")]
+        
         public int? FileSize { get; set; }
 
-        [Required(ErrorMessage = "Este campo é de preencimento obrigatório.")]
-        [StringLength(450)]
+        
         public string? FileName { get; set; }
 
-        public MediaType MediaType { get; set; }
-
+        
 
         public MediaEntity GetEntity()
         {
             return new MediaEntity(
-                this.Id,
+                
                 this.Caption,
                 this.FileSize,
-                this.FileName,
-                this.MediaType
+                this.FileName
+                
                 );
         }
 

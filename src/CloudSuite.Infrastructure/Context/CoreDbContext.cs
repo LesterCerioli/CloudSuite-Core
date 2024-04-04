@@ -1,5 +1,7 @@
 using CloudSuite.Domain.Models;
+using CloudSuite.Domain.Models.PasswordGeneratorContext;
 using CloudSuite.Infrastructure.Mappings.EFCore;
+using CloudSuite.Infrastructure.Mappings.EFCore.Password_Generator;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using NetDevPack.Messaging;
@@ -10,8 +12,8 @@ namespace CloudSuite.Infrastructure.Context
     {
         public CoreDbContext(DbContextOptions<CoreDbContext> options)
         {
-            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            //ChangeTracker.AutoDetectChangesEnabled = false;
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<Address> Addresses { get; set; }
@@ -35,8 +37,10 @@ namespace CloudSuite.Infrastructure.Context
 
         public DbSet<Company> Companies {get; set;}
 
-        
-        
+        public DbSet<Password> Passwords { get; set; }
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -66,6 +70,8 @@ namespace CloudSuite.Infrastructure.Context
             modelBuilder.ApplyConfiguration(new UserEFCoreMapping());
 
             modelBuilder.ApplyConfiguration(new VendorEFCoreMapping());
+
+            modelBuilder.ApplyConfiguration(new PasseordEFCoreMapping());
             
             modelBuilder.Entity<Address>(c =>
             {
@@ -110,6 +116,11 @@ namespace CloudSuite.Infrastructure.Context
             modelBuilder.Entity<Email>(c =>
             {
                 c.ToTable("Emails");
+            });
+
+            modelBuilder.Entity<Password>(c =>
+            {
+                c.ToTable("Passwords");
             });
 
             base.OnModelCreating(modelBuilder);

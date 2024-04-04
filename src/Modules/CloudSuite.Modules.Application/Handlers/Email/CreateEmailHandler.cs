@@ -28,12 +28,13 @@ namespace CloudSuite.Modules.Application.Handlers.Email
                 {
                     var emailSender = await _emailRepository.GetBySender(command.Sender);
                     var emailRecipient = await _emailRepository.GetByRecipient(command.Recipient);
-                    var emailCodeErrorEmail = await _emailRepository.GetByRecipient(command.Recipient);
 
-                    if (emailSender != null && emailRecipient != null && emailCodeErrorEmail != null)
+                    if (emailSender != null && emailRecipient != null)
                     {
-                        return await Task.FromResult(new CreateEmailResponse(command.Id, validationResult));
+                        return await Task.FromResult(new CreateEmailResponse(command.Id, "Email already registered."));
                     }
+                    await _emailRepository.Add(command.GetEntity());
+                    return await Task.FromResult(new CreateEmailResponse(command.Id, validationResult));
                 }
                 catch (Exception ex)
                 {

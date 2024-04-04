@@ -11,6 +11,8 @@ namespace CloudSuite.Domain.Models
 {
     public class Company : Entity, IAggregateRoot
     {
+        private Cnpj cnpj;
+
         public Company(Guid id, Cnpj cnpj, string? fantasyName, string? registerName, Address address) {
             AddressId = id;
             Cnpj = cnpj;
@@ -19,15 +21,30 @@ namespace CloudSuite.Domain.Models
             Address = address;
         }
 
+        public Company(Guid id, Cnpj cnpj, string? fantasyName, string? registerName)
+        {
+            AddressId = id;
+            Cnpj = cnpj;
+            FantasyName = fantasyName;
+            RegisterName = registerName;
+        }
+
+        public Company(Cnpj cnpj, string? fantasyName, string? registerName)
+        {
+            this.cnpj = cnpj;
+            FantasyName = fantasyName;
+            RegisterName = registerName;
+        }
+
         public Cnpj Cnpj { get; set; }
 
         public Guid CnpjID { get; private set; }
 
-        [Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
+        [Required(ErrorMessage = "Este campo ï¿½ de preenchimento obrigatï¿½rio.")]
         [MaxLength(100)]
         public string? FantasyName { get; private set; }
 
-        [Required(ErrorMessage = "Este campo é de preencimento obrigatório.")]
+        [Required(ErrorMessage = "Este campo ï¿½ de preencimento obrigatï¿½rio.")]
         [MaxLength(100)]
         public string? RegisterName { get; private set; }
 

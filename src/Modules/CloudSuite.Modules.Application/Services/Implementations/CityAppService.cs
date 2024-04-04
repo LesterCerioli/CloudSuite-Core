@@ -3,7 +3,7 @@ using CloudSuite.Domain.Contracts;
 using CloudSuite.Modules.Application.Hadlers.City;
 using CloudSuite.Modules.Application.Services.Contracts;
 using CloudSuite.Modules.Application.ViewModel;
-using Microsoft.Extensions.Logging;
+using NetDevPack.Mediator;
 
 namespace CloudSuite.Modules.Application.Services.Implementations
 {
@@ -11,18 +11,17 @@ namespace CloudSuite.Modules.Application.Services.Implementations
 	{
 		private readonly ICityRepository _cityRepository;
 		private readonly IMapper _mapper;
-		private readonly ILogger _logger;
+		private readonly IMediatorHandler _mediator;
 
 		public CityAppService(
-			ICityRepository cityRepository,
-			IMapper mapper,
-			ILogger<ICityAppService> logger)
+            ICityRepository cityRepository,
+            IMediatorHandler mediator,
+            IMapper mapper)
 		{
 			_cityRepository = cityRepository;
 			_mapper = mapper;
-			_logger = logger;
+			_mediator = mediator;
 		}
-
 
 		public async Task<CityViewModel> GetByCityName(string cityName)
 		{

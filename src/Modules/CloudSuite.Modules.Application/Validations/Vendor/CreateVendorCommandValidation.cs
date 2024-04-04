@@ -29,44 +29,6 @@ namespace CloudSuite.Modules.Application.Validations.Vendor
                .Length(1, 100)
                .WithMessage("O campo Description deve ter entre 1 e 100 caracteres.");
 
-            RuleFor(a => a.Email.Subject)
-                .Length(1, 100)
-                .WithMessage("O campo Subject deve ter entre 1 e 100 caracteres.");
-
-            RuleFor(a => a.Email.Body)
-                .Length(1, 3000)
-                .WithMessage("O campo Body deve ter entre 1 e 450 caracteres.");
-
-            RuleFor(a => a.Email.Sender)
-                .NotEmpty()
-                .WithMessage("O campo Sender é obrigatório.")
-                .Length(1, 80)
-                .WithMessage("O campo Sender deve ter entre 1 e 80 caracteres.")
-                .EmailAddress()
-                .WithMessage("O campo Sender deve ser um endereço de email válido.");
-
-            RuleFor(a => a.Email.Recipient)
-                .NotEmpty()
-                .WithMessage("O campo Recipient é obrigatório.")
-                .Length(1, 80)
-                .WithMessage("O campo Recipient deve ter entre 1 e 80 caracteres.")
-                .EmailAddress()
-                .WithMessage("O campo Recipient deve ser um endereço de email válido.");
-
-            RuleFor(a => a.Email.SentDate)
-               .GreaterThan(DateTimeOffset.Now)
-               .WithMessage("A data deve estar no futuro.");
-
-            RuleFor(a => a.Email.SendAttempts)
-                .NotNull()
-                .WithMessage("O campo SendAttempts é obrigatório.")
-                .InclusiveBetween(0, int.MaxValue)
-                .WithMessage("O campo SendAttempts deve ser um número inteiro positivo.");
-
-            RuleFor(a => a.Email.CodeErrorEmail)
-                .IsInEnum()
-                .WithMessage("O campo CodeErrorEmail deve ser um valor válido do enum CodeErrorEmail.");
-
             RuleFor(a => a.CreatedOn)
                 .LessThanOrEqualTo(DateTimeOffset.Now)
                 .WithMessage("O campo CreatedOn deve ser uma data e hora no passado ou presente.");
@@ -77,55 +39,10 @@ namespace CloudSuite.Modules.Application.Validations.Vendor
                .LessThanOrEqualTo(DateTimeOffset.Now)
                .WithMessage("O campo LatestUpdatedOn deve ser uma data e hora no passado ou presente.");
 
-            RuleFor(a => a.User.FullName)
-                .NotEmpty()
-                .WithMessage("O campo FullName é obrigatório.")
-                .Length(1, 100)
-                .WithMessage("O campo FullName deve ter entre 1 e 100 caracteres.")
-                .Matches(@"^[a-zA-Z\s]*$")
-                .WithMessage("O campo FullName deve conter apenas letras e espaços.")
-                .NotNull()
-                .WithMessage("O campo FullName não pode ser nulo.");
-
-            RuleFor(a => a.User.Telephone.TelephoneNumber)
-               .NotEmpty()
-               .WithMessage("O preenchimento do telefone é obrigatorio")
-               .Length(10, 13)
-               .WithMessage("O número de telefone deve ter entre 10 e 13 caracteres.")
-               .Matches(@"^[0-9a-zA-Z\s]*$")
-               .WithMessage("O número de telefone deve conter apenas números e letras.")
-               .NotNull()
-               .WithMessage("O número de telefone não pode ser nulo.");
-
-            RuleFor(a => a.User.Telephone.TelephoneRegion)
-               .Length(1, 100)
-               .WithMessage("O campo TelephoneRegion deve ter entre 1 e 100 caracteres.");
-
-            RuleFor(a => a.User.CreatedOn)
-                .LessThanOrEqualTo(DateTimeOffset.Now)
-                .WithMessage("O campo CreatedOn deve ser uma data e hora no passado ou presente.");
-
-            RuleFor(a => a.User.LatestUpdatedOn)
-                .GreaterThanOrEqualTo(a => a.CreatedOn)
-               .WithMessage("O campo LatestUpdatedOn deve ser uma data e hora no mesmo momento ou depois de CreatedOn.")
-               .LessThanOrEqualTo(DateTimeOffset.Now)
-               .WithMessage("O campo LatestUpdatedOn deve ser uma data e hora no passado ou presente.");
-
-
-            RuleFor(a => a.User.RefreshTokenHash)
-                .Length(1, 450)
-                .WithMessage("O campo RefreshTokenHash deve ter entre 1 e 450 caracteres.");
-
-                    
-
-
             RuleFor(a => a.Cnpj)
-                .Must(cnpj => IsValidCnpj(cnpj.CnpjNumber))
+                .Must(cnpj => IsValidCnpj(cnpj))
                 .WithMessage("O campo Cnpj é inválido.");
 
-            RuleFor(a => a.User.Cpf)
-                .Must(cpf => IsValidCpf(cpf.CpfNumber))
-                .WithMessage("O campo Cnpj é inválido.");
         }
 
         private bool IsValidCnpj(string cnpj)

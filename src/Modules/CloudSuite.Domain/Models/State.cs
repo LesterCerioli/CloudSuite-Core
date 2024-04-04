@@ -13,6 +13,7 @@ namespace CloudSuite.Domain.Models
     public class State : Entity, IAggregateRoot
     {
         private readonly List<Country> _countries;
+        private object value;
 
         public State(Guid id, string uf, string stateName, Country country, Guid countryId)
         {
@@ -24,16 +25,38 @@ namespace CloudSuite.Domain.Models
             CountryId = countryId;
         }
 
+        public State(Guid id, string uf, string stateName, Guid countryId)
+        {
+            Id = id;
+            _countries = new List<Country>();
+            UF = uf;
+            StateName = stateName;
+            CountryId = countryId;
+        }
+
         public State()
         {
 
         }
 
-        [Required(ErrorMessage="Este campo é de preenchimento obrigatório.")]
+        public State(string? uF, string? stateName, object value)
+        {
+            UF = uF;
+            StateName = stateName;
+            this.value = value;
+        }
+
+		public State(string? uF, string? stateName)
+		{
+			UF = uF;
+			StateName = stateName;
+		}
+
+		[Required(ErrorMessage="Este campo ï¿½ de preenchimento obrigatï¿½rio.")]
         [StringLength(100)]
         public string? StateName { get; private set; }
 
-        [Required(ErrorMessage = "Este cmapo é de preenchimento obrigatório.")]
+        [Required(ErrorMessage = "Este cmapo ï¿½ de preenchimento obrigatï¿½rio.")]
 
         public string? UF { get; private set; }
 

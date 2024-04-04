@@ -6,7 +6,7 @@ namespace CloudSuite.Modules.Application.ViewModel
     public class AddressViewModel
     {
         [Key]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DisplayName("Nome de Contato")]
         [Required(ErrorMessage = "The {0} field is required.")]

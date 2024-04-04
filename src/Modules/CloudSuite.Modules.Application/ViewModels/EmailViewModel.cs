@@ -12,7 +12,7 @@ namespace CloudSuite.Modules.Application.ViewModels
 	public class EmailViewModel
 	{
 		[Key]
-		public Guid Id { get; private set; }
+		public Guid Id { get; set; }
 
 		[DisplayName("Assunto")]
 		public string Subject { get; set; } // Email subject

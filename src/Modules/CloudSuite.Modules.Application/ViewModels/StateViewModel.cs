@@ -12,12 +12,12 @@ namespace CloudSuite.Modules.Application.ViewModels
 	public class StateViewModel
 	{
 		[Key]
-		public Guid Id { get; private set; }
+		public Guid Id { get; set; }
 
 		[Required(ErrorMessage = "Este campo é de preenchimento obrigatório.")]
 		[StringLength(100)]
 		[DisplayName("Nome Estado")]
-		public string StateName { get; private set; }
+		public string StateName { get; set; }
 
 		[Required(ErrorMessage = "Este cmapo é de preenchimento obrigatório.")]
 
