@@ -1,4 +1,5 @@
 ﻿using CloudSuite.Modules.Application.Handlers.District;
+using CloudSuite.Modules.Application.Handlers.District.Request;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,24 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
             if (result.Errors.Any())
             {
                 return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
+        [HttpGet]
+        [Route("exists/district/{name}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DistrictExists([FromRoute] string name)
+        {
+            var result = await _mediator.Send(new CheckDistrictExistsByNameRequest(name));
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);  
             }
             else
             {
