@@ -1,7 +1,5 @@
 using AutoMapper;
-using CloudSuite.Domain.Contracts.PasswordGeneratorContext;
 using CloudSuite.Infrastructure.CrossCutting.Middlewares;
-using CloudSuite.Infrastructure.Repositories.PasswordGeneratorContext;
 using CloudSuite.Services.Core.Api.Configurations;
 using MediatR;
 using NetDevPack.Mediator;
@@ -24,7 +22,6 @@ builder.Services.AddDatabaseConfiguration(builder.Configuration);
 var configuration = new MapperConfiguration(cfg =>
 {
 });
-
 
 builder.Services.AddTransient<IMediator, Mediator>();
 builder.Services.AddTransient<IMediatorHandler, MediatorHandler>();
