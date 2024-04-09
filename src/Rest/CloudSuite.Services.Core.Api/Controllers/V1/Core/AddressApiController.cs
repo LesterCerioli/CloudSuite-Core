@@ -23,7 +23,7 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
 		}
 
         [AllowAnonymous]
-        [HttpPost("generate-token")]
+        [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] CreateAddressCommand commandCreate)
