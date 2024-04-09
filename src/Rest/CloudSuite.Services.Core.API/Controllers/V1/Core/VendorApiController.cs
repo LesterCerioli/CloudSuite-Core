@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudSuite.Modules.Application.Handlers.Vendor;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,32 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
     [ApiController]
     public class VendorApiController : ControllerBase
     {
-        // GET: api/<VendorApiController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IMediator _mediator;
+        private ILogger<VendorApiController> _logger;
+
+        public VendorApiController(ILogger<VendorApiController> logger, IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _mediator = mediator;
+            _logger = logger;
         }
 
-        // GET api/<VendorApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        [AllowAnonymous]
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateVendorCommand commandCreate)
         {
-            return "value";
+            var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
-        // POST api/<VendorApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<VendorApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<VendorApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

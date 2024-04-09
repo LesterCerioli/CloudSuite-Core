@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudSuite.Modules.Application.Handlers.District;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,31 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
     [ApiController]
     public class DistrictApiController : ControllerBase
     {
-        // GET: api/<DistrictApiController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ILogger<DistrictApiController> _logger;
+        private readonly IMediator _mediator;
+
+        public DistrictApiController(ILogger<DistrictApiController> logger, IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _logger = logger;
+            _mediator = mediator;
         }
 
-        // GET api/<DistrictApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
 
-        // POST api/<DistrictApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [AllowAnonymous]
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateDistrictCommand commandCreate)
         {
-        }
-
-        // PUT api/<DistrictApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<DistrictApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
     }
 }

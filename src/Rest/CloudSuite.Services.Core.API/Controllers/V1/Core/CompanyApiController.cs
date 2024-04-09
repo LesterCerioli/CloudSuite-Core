@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CloudSuite.Modules.Application.Handlers.Company;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,30 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
     [ApiController]
     public class CompanyApiController : ControllerBase
     {
-        // GET: api/<CompanyApiController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ILogger<CompanyApiController> _logger;
+        private readonly IMediator _mediator;
+
+        public CompanyApiController(ILogger<CompanyApiController> logger, IMediator mediator)
         {
-            return new string[] { "value1", "value2" };
+            _logger = logger;
+            _mediator = mediator;
         }
 
-        // GET api/<CompanyApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [AllowAnonymous]
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateCompanyCommand commandCreate)
         {
-            return "value";
-        }
-
-        // POST api/<CompanyApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CompanyApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CompanyApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
     }
 }
