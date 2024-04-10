@@ -1,10 +1,9 @@
-﻿using Microsoft.OpenApi.Models;
-
-namespace CloudSuite.Services.Core.Api.Configurations
+using Microsoft.OpenApi.Models;
+namespace CloudSuite.Services.Core.API.Configurations
 {
-	public static class SwaggerConfig
-	{
-		public static void AddSwaggerConfiguration(this IServiceCollection services)
+    public static class SwaggerConfig
+    {
+        public static void AddSwaggerConfiguration(this IServiceCollection services)
 		{
 			if (services == null) throw new ArgumentNullException(nameof(services));
 
@@ -57,5 +56,6 @@ namespace CloudSuite.Services.Core.Api.Configurations
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
 			});
 		}
-	}
+        
+    }
 }

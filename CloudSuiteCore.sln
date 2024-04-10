@@ -27,8 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Modules.Applicat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rest", "Rest", "{A9DAC9E0-8E7F-4AF9-B882-DB0CB2559F8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudSuite.Services.Core.Api", "src\Rest\CloudSuite.Services.Core.Api\CloudSuite.Services.Core.Api.csproj", "{B17DCCBD-7345-4185-9518-CC18DA93C363}"
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

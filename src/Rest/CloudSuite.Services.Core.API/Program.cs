@@ -1,6 +1,6 @@
 using AutoMapper;
 using CloudSuite.Infrastructure.CrossCutting.Middlewares;
-using CloudSuite.Services.Core.Api.Configurations;
+using CloudSuite.Services.Core.API.Configurations;
 using MediatR;
 using NetDevPack.Mediator;
 

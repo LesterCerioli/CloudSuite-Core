@@ -1,6 +1,0 @@
-@CloudSuite.Services.Core.Api_HostAddress = http://localhost:5252
-
-GET {{CloudSuite.Services.Core.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
