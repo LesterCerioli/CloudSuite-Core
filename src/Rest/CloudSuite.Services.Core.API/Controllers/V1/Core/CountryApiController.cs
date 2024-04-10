@@ -1,4 +1,5 @@
 ﻿using CloudSuite.Modules.Application.Handlers.Country;
+using CloudSuite.Modules.Application.Handlers.Country.Request;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,25 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
         {
             var result = await _mediator.Send(commandCreate);
             if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("exists/country/{countryName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CountryExists([FromForm] string countryName)
+        {
+            var result = await _mediator.Send(new CheckCountryExistsByCountryNameRequest(countryName));
+            if (result.Errors.Any()) 
             {
                 return BadRequest(result);
             }

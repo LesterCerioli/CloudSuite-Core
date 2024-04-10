@@ -12,6 +12,12 @@ namespace CloudSuite.Modules.Application.Handlers.Vendor
     {
         private readonly IVendorRepository _vendorRepository;
         private readonly ILogger<CheckVendorExistsByCnpjHandler> _logger;
+        private string cnpj;
+
+        public CheckVendorExistsByCnpjHandler(string cnpj)
+        {
+            this.cnpj = cnpj;
+        }
 
         public CheckVendorExistsByCnpjHandler(IVendorRepository vendorRepository, ILogger<CheckVendorExistsByCnpjHandler> logger)
         {

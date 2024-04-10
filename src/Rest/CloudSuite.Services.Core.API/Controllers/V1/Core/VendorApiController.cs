@@ -1,4 +1,7 @@
-﻿using CloudSuite.Modules.Application.Handlers.Vendor;
+﻿using CloudSuite.Domain.ValueObjects;
+using CloudSuite.Modules.Application.Handlers.User.Request;
+using CloudSuite.Modules.Application.Handlers.Vendor;
+using CloudSuite.Modules.Application.Handlers.Vendor.Request;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +31,30 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
         public async Task<IActionResult> Post([FromBody] CreateVendorCommand commandCreate)
         {
             var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
+
+        [HttpGet("exists/cnpj")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CnpjExists([FromBody] string cnpj)
+        {
+            // Ensure CPF is not null or empty
+            if (string.IsNullOrEmpty(cnpj))
+            {
+                return BadRequest("CNPJ is required.");
+            }
+
+            var result = await _mediator.Send(new CheckVendorExistsByCnpjRequest(cnpj));
             if (result.Errors.Any())
             {
                 return BadRequest(result);
