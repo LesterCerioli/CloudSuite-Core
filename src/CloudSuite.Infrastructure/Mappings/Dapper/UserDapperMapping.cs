@@ -1,26 +1,38 @@
 using CloudSuite.Domain.Models;
+using Dapper;
 using Dapper.FluentMap.Dommel.Mapping;
+using System.Data;
 
 namespace CloudSuite.Infrastructure.Mappings.Dapper
 {
     public class UserDapperMapping : DommelEntityMap<User>
     {
-        public UserDapperMapping()
+        private readonly IDbConnection _connection;
+        public UserDapperMapping(IDbConnection connection)
         {
-            ToTable("Users");
-            Map(p => p.Id).IsKey();
-            Map(p => p.FullName).ToColumn("FullName");
-            Map(p => p.IsDeleted).ToColumn("IsDeleted");
-            Map(p => p.Cpf.CpfNumber).ToColumn("CPFNumber");
-            Map(p => p.Telephone.TelephoneRegion).ToColumn("TelephoneRegion");
-            Map(p => p.Telephone.TelephoneNumber).ToColumn("TelephoneNumber");
-            Map(p => p.CreatedOn).ToColumn("CreatedOn");
-            Map(p => p.LatestUpdatedOn).ToColumn("LatestUpdatedOn");
-            Map(p => p.EmailId).ToColumn("EmailId");
-            Map(p => p.RefreshTokenHash).ToColumn("RefreshTokenHash");
-
-            
+            _connection = connection;
         }
-        
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            var query = @"SELECT FullName, IsDeleted, CPFNumber, TelephoneRegion,
+                          TelephoneNumber, CreatedOn, LatestUpdatedOn, EmailId,
+                          RefreshTokenHash FROM Users";
+
+            return await _connection.QueryAsync<User>(query);
+        }
+
+        public async Task<User> GetUserByEmailAsync(string emailId)
+        {
+            var query = @"
+                SELECT 
+                    EmailId
+                FROM
+                    Users
+                WHERE
+                    EmailId = @UserEmailId";
+
+            return await _connection.QueryFirstOrDefaultAsync<User>(query, new { UserEmailId = emailId });
+        }
     }
 }
