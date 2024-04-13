@@ -1,25 +1,49 @@
 using CloudSuite.Domain.Models;
+using Dapper;
 using Dapper.FluentMap.Dommel.Mapping;
+using System.Data;
 
 namespace CloudSuite.Infrastructure.Mappings.Dapper
 {
-    public class StateDapperMapping : DommelEntityMap<State>
+    public class StateDapperMapping
     {
-        public StateDapperMapping()
+        private readonly IDbConnection _connection;
+        public StateDapperMapping(IDbConnection connection)
         {
-            ToTable("States");
-            Map(p => p.Id).IsKey();
-            Map(p => p.StateName).ToColumn("StateName");
-            Map(p => p.UF).ToColumn("UF");
-            Map(p => p.CountryId).ToColumn("CountryId");
-
-            // Map other fields as needed
-
-            // Map relationship with Country
-            //References(p => p.Country).Column("CountryId").Reference();
-
-            // If there are other relationships, map them as needed
+            _connection = connection;
         }
-        
+
+        public async Task<IEnumerable<State>> GetAllStatesAsync()
+        {
+            var query = @"SELECT StateName, UF, CountryId FROM States";
+            return await _connection.QueryAsync<State>(query);
+        }
+
+        public async Task<State> GetStateByNameAsync(string stateName)
+        {
+            var query = @"
+                SELECT 
+                    StateName
+                FROM
+                    States
+                WHERE
+                    StateName = @StateName";
+
+            return await _connection.QueryFirstOrDefaultAsync<State>(query, new { StateName = stateName });
+        }
+
+        public async Task<State> GetStateByUFAsync(string stateUF)
+        {
+            var query = @"
+                SELECT 
+                    UF
+                FROM
+                    States
+                WHERE
+                    UF = @StateUF";
+
+            return await _connection.QueryFirstOrDefaultAsync<State>(query, new { StateUF = stateUF });
+        }
+
     }
 }

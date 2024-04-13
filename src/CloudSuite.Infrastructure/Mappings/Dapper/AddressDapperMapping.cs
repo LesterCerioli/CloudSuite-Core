@@ -1,17 +1,60 @@
 using CloudSuite.Domain.Models;
-using Dapper.FluentMap.Dommel.Mapping;
+using Dapper;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace CloudSuite.Infrastructure.Mappings.Dapper
 {
-    public class AddressDapperMapping : DommelEntityMap<Address>
+    public class AddressDapperMapping
     {
-        public AddressDapperMapping()
+        private readonly IDbConnection _connection;
+        public AddressDapperMapping(IDbConnection connection)
         {
-            ToTable("Addresses");
-            Map(p => p.Id).IsIdentity();
-            Map(p => p.ContactName).ToColumn("ContactName").Ignore();
-            Map(p => p.AddressLine1).ToColumn("AddressLine").Ignore();
+            _connection = connection;
         }
-        
+
+        public async Task<IEnumerable<Address>> GetAllAddressesAsync()
+        {
+            var query = @"
+                        SELECT
+                            ContactName,
+                            AddressLine
+                        FROM
+                            Addresses";
+
+            return await _connection.QueryAsync<Address>(query);
+        }
+
+        public async Task<Address> GetByContactNameAsync(string contactName)
+        {
+            var query = @"
+                        SELECT
+                            ContactName
+                        FROM
+                            Addresses
+                        WHERE
+                            ContactName = @AddressContactName";
+
+            return await _connection.QueryFirstOrDefaultAsync<Address>(query, new { AddressContactName = contactName });
+        }
+
+        public async Task<Address> GetByAddressLineAsync(string addressLine)
+        {
+            var query = @"
+                        SELECT
+                            AddressLine
+                        FROM
+                            Addresses
+                        WHERE
+                            AddressLine = @AddressAddressLine";
+
+            return await _connection.QueryFirstOrDefaultAsync<Address>(query, new { AddressContactName = addressLine });
+        }
+
     }
 }
