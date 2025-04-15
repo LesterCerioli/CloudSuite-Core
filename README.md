@@ -1,3 +1,19 @@
+
+
+# API Endpoints
+
+
+![image](https://github.com/user-attachments/assets/71e2eddd-6cfb-4ecb-a97c-107afcac7740)
+
+![image](https://github.com/user-attachments/assets/69e4cff0-491f-4b98-88f2-d3e3a67892a1)
+
+![image](https://github.com/user-attachments/assets/0f13ad71-2be8-4975-8d58-bfb93c1fb0ec)
+
+
+
+
+
+
 # Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
