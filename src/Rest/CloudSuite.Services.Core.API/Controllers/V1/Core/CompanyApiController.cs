@@ -1,43 +1,96 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using CloudSuite.Modules.Application.Handlers.Company;
+using CloudSuite.Modules.Application.Handlers.Company.Request;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
 {
-    [Route("api/[controller]")]
+     [Route("api/[controller]")]
     [ApiController]
     public class CompanyApiController : ControllerBase
     {
-        // GET: api/<CompanyApiController>
+        private readonly ILogger<CompanyApiController> _logger;
+        private readonly IMediator _mediator;
+
+        public CompanyApiController(ILogger<CompanyApiController> logger, IMediator mediator)
+        {
+            _logger = logger;
+            _mediator = mediator;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateCompanyCommand commandCreate)
+        {
+            var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("exists/company/{cnpj}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CompanyExists([FromRoute] string cnpj)
         {
-            return new string[] { "value1", "value2" };
+            var result = await _mediator.Send(new CheckCompanyExistsByCnpjRequest(cnpj)); ;
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
-        // GET api/<CompanyApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [Route("exists/company/{fantasyName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> FantasyNameExists([FromRoute] string fantasyName)
         {
-            return "value";
+            var result = await _mediator.Send(new CheckCompanyExistsByFantasyNameRequest(fantasyName));
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
-        // POST api/<CompanyApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
-        // PUT api/<CompanyApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet]
+        [Route("exists/company/{registerName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RegisterNameExists([FromRoute] string registerName)
         {
-        }
+            var result = await _mediator.Send(new CheckCompanyExistsByRegisterNameRequest(registerName));
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
 
-        // DELETE api/<CompanyApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
