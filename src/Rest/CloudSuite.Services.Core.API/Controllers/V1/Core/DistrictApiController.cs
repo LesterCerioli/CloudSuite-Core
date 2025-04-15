@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using CloudSuite.Modules.Application.Handlers.District;
+using CloudSuite.Modules.Application.Handlers.District.Request;
 
 namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
 {
@@ -8,36 +10,49 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
     [ApiController]
     public class DistrictApiController : ControllerBase
     {
-        // GET: api/<DistrictApiController>
+        private readonly ILogger<DistrictApiController> _logger;
+        private readonly IMediator _mediator;
+
+        public DistrictApiController(ILogger<DistrictApiController> logger, IMediator mediator)
+        {
+            _logger = logger;
+            _mediator = mediator;
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateDistrictCommand commandCreate)
+        {
+            var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("exists/district/{name}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DistrictExists([FromRoute] string name)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<DistrictApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<DistrictApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<DistrictApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<DistrictApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result = await _mediator.Send(new CheckDistrictExistsByNameRequest(name));
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);  
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
     }
 }
