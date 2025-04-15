@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using CloudSuite.Modules.Application.Handlers.State;
+using CloudSuite.Modules.Application.Handlers.State.Request;
 
 namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
 {
@@ -8,36 +10,49 @@ namespace CloudSuite.Services.Core.Api.Controllers.V1.Core
     [ApiController]
     public class StateApiController : ControllerBase
     {
-        // GET: api/<StateApiController>
+        private readonly IMediator _mediator;
+        private readonly ILogger<StateApiController> _logger;
+
+        public StateApiController(ILogger<StateApiController> logger, IMediator mediator)
+        {
+            _mediator = mediator;
+            _logger = logger;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("create")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post([FromBody] CreateStateCommand commandCreate)
+        {
+            var result = await _mediator.Send(commandCreate);
+            if (result.Errors.Any())
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("exists/state/{stateName}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> StateExists([FromRoute] string stateName)
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<StateApiController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<StateApiController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<StateApiController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<StateApiController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result = await _mediator.Send(new CheckStateExistsByNameRequest(stateName));
+            if (result.Errors.Any()) 
+            {
+                return BadRequest(result);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
     }
 }
