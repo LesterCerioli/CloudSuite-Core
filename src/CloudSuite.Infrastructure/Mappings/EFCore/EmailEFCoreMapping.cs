@@ -38,12 +38,12 @@ namespace CloudSuite.Infrastructure.Mappings.EFCore
                 
             builder.Property(f => f.IsRead)
                 .HasColumnName("IsRead")
-                .HasColumnType("bit");
+                .HasColumnType("boolean");
             builder.Property(f => f.SendAttempts)
                 .HasColumnName("SendAttempts")
                 .HasColumnType("int(2)");
 
-            // Relacionamento com CodeErrorEmail
+            
             builder.Property(f => f.CodeErrorEmail)
                 .HasColumnName("CodeErrorEmail")
                 .HasColumnType("int")

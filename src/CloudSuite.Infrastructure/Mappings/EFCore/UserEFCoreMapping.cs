@@ -23,7 +23,7 @@ namespace CloudSuite.Infrastructure.Mappings.EFCore
 
             builder.Property(i => i.IsDeleted)
                 .HasColumnName("IsDeleted")
-                .HasColumnType("bit")
+                .HasColumnType("boolean")
                 .IsRequired();
 
             builder.OwnsOne(p => p.Cpf)

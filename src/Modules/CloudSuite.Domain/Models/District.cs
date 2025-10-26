@@ -11,39 +11,34 @@ namespace CloudSuite.Domain.Models
     {
 
         private readonly List<City> _cities;
+
         public District(Guid id, string name, string type, string location)
         {
             Id = id;
-            _cities = new List<City>(0);
+            _cities = new List<City>();
             Name = name;
             Type = type;
             Location = location;
         }
 
-        public District() { }
-
-        public District(string? name, string? type, string? location)
+        protected District() 
         {
-            Name = name;
-            Type = type;
-            Location = location;
+            _cities = new List<City>();
         }
 
+    
         public IReadOnlyCollection<City> Cities => _cities.AsReadOnly();
 
-        public City City { get; private set; }
-
-        public Guid CityId { get; private set; }
+        [Required(ErrorMessage = "The {0} field is required.")]
+        [StringLength(100)] // ✅ Reduzido de 450
+        public string Name { get; private set; }
 
         [Required(ErrorMessage = "The {0} field is required.")]
-        [StringLength(450)]
-        public string? Name { get; private set; }
-
-        [Required(ErrorMessage = "The {0} field is required.")]
-        public string? Type {  get; private set; }
+        [StringLength(50)] // ✅ Adicione tamanho máximo
+        public string Type { get; private set; }
 
         [Required(ErrorMessage = "The {0} field is required.")]
         [StringLength(100)]
-        public string? Location { get; private set; }
+        public string Location { get; private set; }
     }
 }

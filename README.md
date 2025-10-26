@@ -25,6 +25,14 @@ Cloud Suite is a comprehensive **Customer Relationship Management (CRM) Software
 ![image](https://github.com/user-attachments/assets/0f13ad71-2be8-4975-8d58-bfb93c1fb0ec)
 
 
+## Migrations
+
+on CloudSuite.Infrastructure project execute:
+
+      dotnet ef migrations add InitialPostgres --project . --startup-project ..\Rest\CloudSuite.Services.Core.API --output-dir Context/Migrations
+     dotnet ef database update --project . --startup-project ..\Rest\CloudSuite.Services.Core.API
+
+
 
 
 

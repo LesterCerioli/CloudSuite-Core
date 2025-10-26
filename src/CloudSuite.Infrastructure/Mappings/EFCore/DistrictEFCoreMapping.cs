@@ -8,33 +8,44 @@ namespace CloudSuite.Infrastructure.Mappings.EFCore
     {
         public void Configure(EntityTypeBuilder<District> builder)
         {
-            builder.HasKey(e => e.Id);
+            builder.ToTable("Districts");
 
-            builder.Property(e => e.Id)
-                .HasColumnName("Id");
+            builder.HasKey(d => d.Id);
 
-            builder.Property(e => e.Name)
+            builder.Property(d => d.Id)
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
+
+            builder.Property(d => d.Name)
                 .HasColumnName("Name")
-                .IsRequired()
-                .HasMaxLength(450)
+                .HasColumnType("character varying(100)")
+                .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(e => e.Type)
+            builder.Property(d => d.Type)
                 .HasColumnName("Type")
-                .HasColumnType("varchar(20)")
+                .HasColumnType("character varying(50)")
+                .HasMaxLength(50)
                 .IsRequired();
 
-            builder.Property(e => e.Location)
+            builder.Property(d => d.Location)
                 .HasColumnName("Location")
-                .HasColumnType("varchar(100)")
-                .IsRequired()
-                .HasMaxLength(100);
+                .HasColumnType("character varying(100)")
+                .HasMaxLength(100)
+                .IsRequired();
 
-            builder.HasOne(p => p.City)
-                .WithMany()
-                .HasForeignKey(p => p.CityId)
-                .OnDelete(DeleteBehavior.Restrict);
+           
+            builder.HasMany(d => d.Cities)
+                .WithOne(c => c.District) // City deve ter propriedade District
+                .HasForeignKey(c => c.DistrictId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            
+            builder.HasIndex(d => d.Name)
+                .HasDatabaseName("IX_Districts_Name");
+
+            builder.HasIndex(d => d.Type)
+                .HasDatabaseName("IX_Districts_Type");
         }
     }
 }
