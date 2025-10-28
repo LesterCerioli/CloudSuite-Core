@@ -3,14 +3,21 @@ using CloudSuite.Domain.Contracts.PasswordGeneratorContext;
 using CloudSuite.Infrastructure.CrossCutting.Middlewares;
 using CloudSuite.Infrastructure.Repositories.PasswordGeneratorContext;
 using CloudSuite.Services.Core.Api.Configurations;
+using DotNetEnv;
 using MediatR;
 using NetDevPack.Mediator;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+Env.Load();
 builder.Services.AddControllers();
+
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbPort = Environment.GetEnvironmentVariable("DB_PORT");
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

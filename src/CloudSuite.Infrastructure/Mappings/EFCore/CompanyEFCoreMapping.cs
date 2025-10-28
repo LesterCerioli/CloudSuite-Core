@@ -8,23 +8,54 @@ namespace CloudSuite.Infrastructure.Mappings.EFCore
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
+            builder.ToTable("Companies");
+
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.Id)
-                .HasColumnName("Id");
+                .HasColumnName("Id")
+                .ValueGeneratedOnAdd();
 
-            builder.OwnsOne(p => p.Cnpj)
-                            .Property(p => p.CnpjNumber).HasColumnName("CNPJNumber").HasMaxLength(11).IsRequired();
+            
+            builder.OwnsOne(c => c.Cnpj, cnpj =>
+            {
+                cnpj.Property(p => p.CnpjNumber) // ← PROPRIEDADE PÚBLICA
+                    .HasColumnName("Cnpj")
+                    .HasColumnType("character varying(14)")
+                    .HasMaxLength(14)
+                    .IsRequired();
+            });
 
             builder.Property(c => c.FantasyName)
                 .HasColumnName("FantasyName")
-                .HasColumnType("varchar(100)")
+                .HasColumnType("character varying(100)")
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(c => c.RegisterName)
                 .HasColumnName("RegisterName")
-                .HasColumnType("varchar(100)")
+                .HasColumnType("character varying(100)")
+                .HasMaxLength(100)
                 .IsRequired();
+
+            builder.Property(c => c.AddressId)
+                .HasColumnName("AddressId")
+                .IsRequired();
+
+            builder.HasOne(c => c.Address)
+                .WithMany()
+                .HasForeignKey(c => c.AddressId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            
+            builder.HasIndex(c => c.FantasyName)
+                .HasDatabaseName("IX_Companies_FantasyName");
+
+            builder.HasIndex(c => c.RegisterName)
+                .HasDatabaseName("IX_Companies_RegisterName");
+
+            builder.HasIndex(c => c.AddressId)
+                .HasDatabaseName("IX_Companies_AddressId");
         }
     }
 }
